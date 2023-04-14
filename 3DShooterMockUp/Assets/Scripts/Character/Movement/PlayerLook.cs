@@ -12,6 +12,8 @@ public class PlayerLook : MonoBehaviour
     private Transform Player { get; set; }
     [field: SerializeField]
     private Transform PlayerCamera { get; set; }
+    [field: SerializeField]
+    private Rigidbody PlayerRigidbody { get; set; }
 
     private float RotationAxisX { get; set; } = 0.0f;
     
@@ -23,7 +25,7 @@ public class PlayerLook : MonoBehaviour
         HandleCursor();
     }
     
-    protected virtual void Update ()
+    protected virtual void FixedUpdate ()
     {
         HandleRotation();
     }
@@ -43,6 +45,9 @@ public class PlayerLook : MonoBehaviour
         RotationAxisX = Mathf.Clamp(RotationAxisX, MinAngleValue, MaxAngleValue);
 
         PlayerCamera.localRotation = Quaternion.Euler(RotationAxisX, 0f, 0f);
-        Player.Rotate(Vector3.up * mouseX, Space.World);
+        //Player.Rotate(Vector3.up * mouseX, Space.World);
+        Quaternion deltaRotation = Quaternion.Euler(0f, mouseX, 0f);
+        PlayerRigidbody.rotation = (PlayerRigidbody.rotation * deltaRotation);
+
     }
 }
