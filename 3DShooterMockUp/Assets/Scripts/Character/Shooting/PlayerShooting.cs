@@ -26,7 +26,7 @@ public class PlayerShooting : MonoBehaviour
     
     private void ManageInputs ()
     {
-        CurrentInputActions = new();
+        CurrentInputActions = new ShooterMockUpInputActions();
         CurrentInputActions.Player.Enable();
     }
     
