@@ -432,6 +432,7 @@ MonoBehaviour:
   <MouseSensitivity>k__BackingField: 100
   <Player>k__BackingField: {fileID: 2069355188}
   <PlayerCamera>k__BackingField: {fileID: 963194228}
+  <PlayerRigidbody>k__BackingField: {fileID: 2069355189}
 --- !u!1 &992829194
 GameObject:
   m_ObjectHideFlags: 0
