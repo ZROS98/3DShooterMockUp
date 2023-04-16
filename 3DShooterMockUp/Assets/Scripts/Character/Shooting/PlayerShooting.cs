@@ -36,12 +36,15 @@ namespace ShooterMockUp.Player
 
         private void OnLeftMouseButtonActionUpdated (InputAction.CallbackContext context)
         {
-            CurrentSlowWeapon.Shoot();
+            if (context.performed)
+            {
+                CurrentFastWeapon.Shoot();
+            }
         }
 
         private void OnRightMouseButtonActionUpdated (InputAction.CallbackContext context)
         {
-            CurrentFastWeapon.Shoot();
+            CurrentSlowWeapon.Shoot();
         }
 
         private void AttachEvents ()

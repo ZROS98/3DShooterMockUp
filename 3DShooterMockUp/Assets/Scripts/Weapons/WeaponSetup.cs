@@ -1,4 +1,5 @@
 ﻿using ShooterMockUp.Utilities;
+using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
 
 namespace ShooterMockUp.Weapon
@@ -8,17 +9,17 @@ namespace ShooterMockUp.Weapon
     {
         [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
-        private GameObject Projectile { get; set; }
+        public Projectile Projectile { get; set; }
 
         [field: Header(ProjectConstants.HEADER_SETTINGS)]
         [field: SerializeField,]
-        private float Damage { get; set; }
+        public float Damage { get; set; }
         [field: SerializeField]
-        private float Speed { get; set; }
+        public float ShootingForce { get; set; }
         [field: SerializeField]
-        private float ReloadTime { get; set; }
+        public float ReloadTime { get; set; }
         [field: SerializeField]
-        private float MagazineCapacity { get; set; }
+        public float MagazineCapacity { get; set; }
 
         private const string ASSET_NAME = nameof(WeaponSetup);
     }

@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919aafec05764ab089e63aa3b30f2d51, type: 3}
   m_Name: FastWeaponSetup
   m_EditorClassIdentifier: 
+  <Projectile>k__BackingField: {fileID: 1699161000581401048, guid: bf77305810de19342956119909f93055, type: 3}
+  <Damage>k__BackingField: 25
+  <ShootingForce>k__BackingField: 25
+  <ReloadTime>k__BackingField: 0
+  <MagazineCapacity>k__BackingField: 0

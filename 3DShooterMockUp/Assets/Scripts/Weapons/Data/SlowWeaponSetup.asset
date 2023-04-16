@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919aafec05764ab089e63aa3b30f2d51, type: 3}
   m_Name: SlowWeaponSetup
   m_EditorClassIdentifier: 
+  <Projectile>k__BackingField: {fileID: -2594661396909704567, guid: d0ceb46fdbc264f46818aaea62389e64, type: 3}
+  <Damage>k__BackingField: 125
+  <ShootingForce>k__BackingField: 15
+  <ReloadTime>k__BackingField: 0
+  <MagazineCapacity>k__BackingField: 0
