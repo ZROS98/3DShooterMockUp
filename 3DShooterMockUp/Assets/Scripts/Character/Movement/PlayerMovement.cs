@@ -1,20 +1,42 @@
+using SUtilities.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [field: Header(ProjectConstants.HEADER_REFERENCES)]
+    [field: SerializeField]
+    private Transform PlayerCamera { get; set; }
+    [field: SerializeField]
+    private Transform GroundCheckObject { get; set; }
+    [field: SerializeField]
+    private Rigidbody CurrentRigidbody { get; set; }
+
+    [field: Header(ProjectConstants.HEADER_SETTINGS)]
+    [field: SerializeField]
+    private LayerMask GroundLayer { get; set; }
     [field: SerializeField]
     private float WalkSpeed = 10.0f;
     [field: SerializeField]
     private float JumpForce = 10.0f;
     [field: SerializeField]
-    private Rigidbody CurrentRigidbody { get; set; }
+    private float GroundCheckSphereRadius { get; set; } = 0.3f;
 
-    private Vector2 MovementInput;
-
+    private Vector2 MovementInput { get; set; }
+    private float RotationAngel { get; set; } = 90.0f;
+    
     protected virtual void FixedUpdate ()
     {
+        RotateRigidbodyToCameraForward();
         Run();
+    }
+
+    private void RotateRigidbodyToCameraForward ()
+    {
+        Vector3 cameraForward = -PlayerCamera.forward;
+        Quaternion desiredRotation = Quaternion.LookRotation(Vector3.up, cameraForward) * Quaternion.AngleAxis(RotationAngel, Vector3.right);
+
+        CurrentRigidbody.rotation = desiredRotation;
     }
 
     private void Run ()
@@ -23,18 +45,27 @@ public class PlayerMovement : MonoBehaviour
         CurrentRigidbody.velocity = transform.TransformDirection(playerVelocity);
     }
 
+    private void OnMove (InputValue inputValue)
+    {
+        MovementInput = inputValue.Get<Vector2>();
+    }
+
     private void OnJump (InputValue inputValue)
     {
-        Vector3 velocityPossibleToJump = new Vector3(CurrentRigidbody.velocity.x, 0.0f, CurrentRigidbody.velocity.z); 
-        
-        if (inputValue.isPressed && CurrentRigidbody.velocity == velocityPossibleToJump)
-        { 
+        if (inputValue.isPressed && IsGrounded() == true)
+        {
             CurrentRigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
         }
     }
 
-    private void OnMove (InputValue inputValue)
+    private bool IsGrounded ()
     {
-        MovementInput = inputValue.Get<Vector2>();
+        return Physics.CheckSphere(GroundCheckObject.position, GroundCheckSphereRadius, GroundLayer);
+    }
+
+    private void OnDrawGizmos ()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(GroundCheckObject.position, GroundCheckSphereRadius);
     }
 }
