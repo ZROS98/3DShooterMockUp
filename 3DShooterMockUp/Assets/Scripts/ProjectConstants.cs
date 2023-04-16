@@ -1,4 +1,4 @@
-﻿namespace SUtilities.Utilities
+﻿namespace ShooterMockUp.Utilities
 {
     public class ProjectConstants
     {

@@ -1,4 +1,4 @@
-﻿using SUtilities.Utilities;
+﻿using ShooterMockUp.Utilities;
 using UnityEngine;
 
 namespace ShooterMockUp.Weapon
