@@ -4,8 +4,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
-    private readonly Weapon currentSlowWeapon = new SlowWeapon();
-    private readonly Weapon currentFastWeapon = new FastWeapon();
+    [field: SerializeField]
+    private SlowWeapon CurrentSlowWeapon { get; set; }
+    [field: SerializeField]
+    private SlowWeapon CurrentFastWeapon { get; set; }
     
     private ShooterMockUpInputActions CurrentInputActions { get; set; }
     
@@ -32,12 +34,12 @@ public class PlayerShooting : MonoBehaviour
     
     private void OnLeftMouseButtonActionUpdated (InputAction.CallbackContext context)
     {
-        currentFastWeapon.Shoot();
+        CurrentSlowWeapon.Shoot();
     }
     
     private void OnRightMouseButtonActionUpdated (InputAction.CallbackContext context)
     {
-        currentSlowWeapon.Shoot();
+        CurrentFastWeapon.Shoot();
     }
     
     private void AttachEvents ()
