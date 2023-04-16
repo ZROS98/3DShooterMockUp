@@ -9,8 +9,6 @@ public class PlayerLook : MonoBehaviour
     private float MouseSensitivity { get; set; } = 100.0f;
     
     [field: SerializeField]
-    private Transform Player { get; set; }
-    [field: SerializeField]
     private Transform PlayerCamera { get; set; }
     [field: SerializeField]
     private Rigidbody PlayerRigidbody { get; set; }
