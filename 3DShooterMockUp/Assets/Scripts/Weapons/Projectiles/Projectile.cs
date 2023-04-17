@@ -13,6 +13,9 @@ namespace ShooterMockUp.Weapon.Projectiles
         private ProjectileSetup CurrentProjectileSetup { get; set; }
         [field: SerializeField]
         private float DamageRadius { get; set; }
+        
+        public ObjectPool CurrentObjectPool { get; set; }
+        
         private float TimeToAutoDestroy { get; set; } = 3.0f;
 
         public void StartAutoDestroy (ObjectPool objectPool)

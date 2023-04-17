@@ -16,13 +16,12 @@ namespace ShooterMockUp.Weapon
 
         public virtual void Shoot ()
         {
-            GameObject projectile = CurrentObjectPool.GetObjectFromPool(CurrentWeaponSetup.Projectile.CurrentProjectileType);
-            projectile.transform.position = BulletSpawnTransform.position;
-            projectile.transform.rotation = BulletSpawnTransform.rotation;
+            GameObject projectile = GenerateProjectile();
             Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
             projectileRigidbody.AddForce(BulletSpawnTransform.forward * CurrentWeaponSetup.ShootingForce, ForceMode.Impulse);
             
             projectile.GetComponent<Projectile>().StartAutoDestroy(CurrentObjectPool);
+            SetReferenceToObjectPool(projectile);
         }
 
         protected virtual void Start ()
@@ -34,6 +33,23 @@ namespace ShooterMockUp.Weapon
         {
             Projectile targetProjectile = CurrentWeaponSetup.Projectile;
             CurrentObjectPool.AddObjectToPool(targetProjectile.CurrentProjectileType, targetProjectile.gameObject);
+        }
+
+        private GameObject GenerateProjectile ()
+        {
+            GameObject projectile = CurrentObjectPool.GetObjectFromPool(CurrentWeaponSetup.Projectile.CurrentProjectileType);
+            projectile.transform.position = BulletSpawnTransform.position;
+            projectile.transform.rotation = BulletSpawnTransform.rotation;
+
+            return projectile;
+        }
+
+        private void SetReferenceToObjectPool (GameObject projectile)
+        {
+            if (projectile.TryGetComponent<Projectile>(out Projectile currentProjectile))
+            {
+                currentProjectile.CurrentObjectPool = CurrentObjectPool;
+            }
         }
     }
 }
