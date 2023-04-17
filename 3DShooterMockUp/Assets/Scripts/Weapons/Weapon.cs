@@ -1,4 +1,4 @@
-using ShooterMockUp.Utilities;
+using ShooterMockUp.Tools;
 using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
 
@@ -15,8 +15,7 @@ namespace ShooterMockUp.Weapon
 
         public virtual void Shoot ()
         {
-           // GameObject projectile = Instantiate(CurrentWeaponSetup.Projectile.gameObject, BulletSpawnTransform.position, BulletSpawnTransform.rotation);
-            GameObject projectile = CurrentObjectPool.GetObjectFromPool(CurrentWeaponSetup.Projectile.PoolIndex);
+            GameObject projectile = CurrentObjectPool.GetObjectFromPool(CurrentWeaponSetup.Projectile.CurrentProjectileType);
             projectile.transform.position = BulletSpawnTransform.position;
             projectile.transform.rotation = BulletSpawnTransform.rotation;
             Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
@@ -32,7 +31,8 @@ namespace ShooterMockUp.Weapon
 
         private void AddBulletToPool ()
         {
-            CurrentObjectPool.AddObjectToPool(CurrentWeaponSetup.Projectile.gameObject);
+            Projectile targetProjectile = CurrentWeaponSetup.Projectile;
+            CurrentObjectPool.AddObjectToPool(targetProjectile.CurrentProjectileType, targetProjectile.gameObject);
         }
     }
 }

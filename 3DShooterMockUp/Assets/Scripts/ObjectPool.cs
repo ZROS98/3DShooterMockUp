@@ -1,68 +1,75 @@
 ﻿using System.Collections.Generic;
+using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace ShooterMockUp.Utilities
+namespace ShooterMockUp.Tools
 {
     public class ObjectPool : MonoBehaviour
     {
-        [field: SerializeField]
-        private List<List<GameObject>> PooledObjects = new List<List<GameObject>>();
-        
-        [field: SerializeField]
-        private List<GameObject> Prefabs = new List<GameObject>();
+        private Dictionary<ProjectileType, List<GameObject>> PooledObjects { get; set; } = new Dictionary<ProjectileType, List<GameObject>>();
+        private Dictionary<ProjectileType, GameObject> Prefabs { get; set; } = new Dictionary<ProjectileType, GameObject>();
 
         public int maxPoolSize = 10;
 
-        public void AddObjectToPool (GameObject prefab)
+        public void AddObjectToPool (ProjectileType projectileType, GameObject prefab)
         {
-            PooledObjects.Add(new List<GameObject>());
-            Prefabs.Add(prefab);
+            if (PooledObjects.ContainsKey(projectileType))
+            {
+                return;
+            }
+
+            PooledObjects.Add(projectileType, new List<GameObject>());
+            Prefabs.Add(projectileType, prefab);
         }
 
-        public GameObject GetObjectFromPool (int index)
+        public GameObject GetObjectFromPool (ProjectileType projectileType)
         {
-            if (index >= 0 && index < PooledObjects.Count)
+            if (PooledObjects.TryGetValue(projectileType, out List<GameObject> gameObjectList))
             {
-                List<GameObject> objectList = PooledObjects[index];
-
-                if (objectList.Count > 0)
+                if (gameObjectList.Count > 0)
                 {
-                    GameObject obj = objectList[0];
-                    objectList.RemoveAt(0);
-                    obj.SetActive(true);
-                    return obj;
+                    GameObject currentGameObject = gameObjectList[0];
+                    gameObjectList.RemoveAt(0);
+                    currentGameObject.SetActive(true);
+                    return currentGameObject;
                 }
                 else
                 {
-                    GameObject prefab = Prefabs[index];
-
-                    if (prefab != null)
-                    {
-                        GameObject newObj = Instantiate(prefab);
-                        newObj.name = prefab.name;
-                        return newObj;
-                    }
+                    return InstantiateNewObject(projectileType);
                 }
             }
 
             return null;
         }
 
-        public void ReturnObjectToPool (int index, GameObject obj)
+        private GameObject InstantiateNewObject (ProjectileType projectileType)
         {
-            if (index >= 0 && index < PooledObjects.Count && obj != null)
+            GameObject prefab = Prefabs[projectileType];
+
+            if (prefab != null)
             {
-                List<GameObject> objectList = PooledObjects[index];
+                GameObject newObject = Instantiate(prefab);
+                newObject.name = prefab.name;
+                return newObject;
+            }
+
+            return null;
+        }
+
+        public void ReturnObjectToPool (ProjectileType projectileType, GameObject currentGameObject)
+        {
+            if (PooledObjects.ContainsKey(projectileType) && currentGameObject != null)
+            {
+                List<GameObject> objectList = PooledObjects[projectileType];
 
                 if (objectList.Count < maxPoolSize)
                 {
-                    obj.SetActive(false);
-                    objectList.Add(obj);
+                    currentGameObject.SetActive(false);
+                    objectList.Add(currentGameObject);
                 }
                 else
                 {
-                    Destroy(obj);
+                    Destroy(currentGameObject);
                 }
             }
         }

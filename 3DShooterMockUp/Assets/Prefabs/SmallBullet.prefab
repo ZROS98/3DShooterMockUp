@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c33e8a5c1641dc812c9543641d67cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PoolIndex>k__BackingField: 1
+  <CurrentProjectileType>k__BackingField: 1

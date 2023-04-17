@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef6cd340f9e4d77a14fc7d01934c208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BulletPrefab>k__BackingField: {fileID: 0}
+  <CurrentProjectileType>k__BackingField: 0
