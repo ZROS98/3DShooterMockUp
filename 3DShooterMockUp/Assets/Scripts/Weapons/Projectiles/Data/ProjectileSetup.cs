@@ -8,6 +8,8 @@ namespace ShooterMockUp.Weapon.Projectiles.Data
     {
         [field: SerializeField]
         public int Damage { get; set; }
+        [field: SerializeField]
+        public float DamageRadius { get; set; }
         
         private const string ASSET_NAME = nameof(ProjectileSetup);
     }

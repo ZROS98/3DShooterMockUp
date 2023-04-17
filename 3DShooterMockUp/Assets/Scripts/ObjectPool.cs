@@ -31,6 +31,7 @@ namespace ShooterMockUp.Tools
                     GameObject currentGameObject = gameObjectList[0];
                     gameObjectList.RemoveAt(0);
                     currentGameObject.SetActive(true);
+                    
                     return currentGameObject;
                 }
                 else
@@ -50,10 +51,23 @@ namespace ShooterMockUp.Tools
             {
                 GameObject newObject = Instantiate(prefab);
                 newObject.name = prefab.name;
+                SetReferenceToObjectPool(newObject);
+                
                 return newObject;
             }
 
             return null;
+        }
+        
+        private void SetReferenceToObjectPool (GameObject projectile)
+        {
+            if (projectile.TryGetComponent<Projectile>(out Projectile currentProjectile))
+            {
+                if (currentProjectile.CurrentObjectPool == null)
+                {
+                    currentProjectile.CurrentObjectPool = this;
+                }
+            }
         }
 
         public void ReturnObjectToPool (ProjectileType projectileType, GameObject currentGameObject)

@@ -147,3 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentProjectileType>k__BackingField: 0
+  <CurrentProjectileSetup>k__BackingField: {fileID: 11400000, guid: d3a2a86db724c4f40a6915dbe03547eb, type: 2}
+  <DamageRadius>k__BackingField: 0
+  <CurrentObjectPool>k__BackingField: {fileID: 0}

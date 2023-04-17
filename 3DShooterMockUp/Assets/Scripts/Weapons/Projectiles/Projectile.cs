@@ -11,22 +11,27 @@ namespace ShooterMockUp.Weapon.Projectiles
         public ProjectileType CurrentProjectileType { get; set; }
         [field: SerializeField]
         private ProjectileSetup CurrentProjectileSetup { get; set; }
-        [field: SerializeField]
-        private float DamageRadius { get; set; }
         
+        
+        [field: SerializeField]
         public ObjectPool CurrentObjectPool { get; set; }
         
         private float TimeToAutoDestroy { get; set; } = 3.0f;
 
-        public void StartAutoDestroy (ObjectPool objectPool)
+        protected virtual void OnEnable ()
         {
-            StartCoroutine(AutoDestroyProcess(objectPool));
+            StartAutoDestroy();
+        }
+        
+        private void StartAutoDestroy ( )
+        {
+            StartCoroutine(AutoDestroyProcess());
         }
 
-        private IEnumerator AutoDestroyProcess (ObjectPool objectPool)
+        private IEnumerator AutoDestroyProcess ()
         {
             yield return new WaitForSeconds(TimeToAutoDestroy);
-            objectPool.ReturnObjectToPool(CurrentProjectileType, gameObject);
+            CurrentObjectPool.ReturnObjectToPool(CurrentProjectileType, gameObject);
             StopAllCoroutines();
         }
 
@@ -37,7 +42,7 @@ namespace ShooterMockUp.Weapon.Projectiles
 
         private void CheckForEnemies ()
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, DamageRadius);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, CurrentProjectileSetup.DamageRadius);
 
             foreach (Collider currentCollider in colliders)
             {
