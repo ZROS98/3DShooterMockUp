@@ -1,4 +1,5 @@
 using ShooterMockUp.Tools;
+using ShooterMockUp.Weapon.Data;
 using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
 

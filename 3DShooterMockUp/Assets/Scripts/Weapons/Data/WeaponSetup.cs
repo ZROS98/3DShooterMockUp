@@ -2,7 +2,7 @@
 using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
 
-namespace ShooterMockUp.Weapon
+namespace ShooterMockUp.Weapon.Data
 {
     [CreateAssetMenu(menuName = ProjectConstants.SHOOTER_MOCK_UP_MENU_PATH + ASSET_NAME)]
     public class WeaponSetup : ScriptableObject
@@ -12,8 +12,6 @@ namespace ShooterMockUp.Weapon
         public Projectile Projectile { get; set; }
 
         [field: Header(ProjectConstants.HEADER_SETTINGS)]
-        [field: SerializeField,]
-        public float Damage { get; set; }
         [field: SerializeField]
         public float ShootingForce { get; set; }
         [field: SerializeField]
