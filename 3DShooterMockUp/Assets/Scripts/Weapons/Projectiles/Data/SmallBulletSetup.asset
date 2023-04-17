@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SmallBulletSetup
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 25
+  <DamageRadius>k__BackingField: 0.2

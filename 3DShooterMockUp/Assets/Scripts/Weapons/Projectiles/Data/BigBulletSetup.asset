@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: BigBulletSetup
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 125
+  <DamageRadius>k__BackingField: 3

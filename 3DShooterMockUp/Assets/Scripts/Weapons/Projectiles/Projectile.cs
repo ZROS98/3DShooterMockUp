@@ -12,8 +12,6 @@ namespace ShooterMockUp.Weapon.Projectiles
         [field: SerializeField]
         private ProjectileSetup CurrentProjectileSetup { get; set; }
         
-        
-        [field: SerializeField]
         public ObjectPool CurrentObjectPool { get; set; }
         
         private float TimeToAutoDestroy { get; set; } = 3.0f;
@@ -38,6 +36,7 @@ namespace ShooterMockUp.Weapon.Projectiles
         private void OnCollisionEnter (Collision other)
         {
             CheckForEnemies();
+            CurrentObjectPool.ReturnObjectToPool(CurrentProjectileType, gameObject);
         }
 
         private void CheckForEnemies ()
