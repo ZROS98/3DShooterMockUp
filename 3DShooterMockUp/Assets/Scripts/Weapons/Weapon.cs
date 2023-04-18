@@ -12,13 +12,12 @@ namespace ShooterMockUp.Weapon
         [field: SerializeField]
         private Transform BulletSpawnTransform { get; set; }
         [field: SerializeField]
-        private ObjectPool CurrentObjectPool { get; set; }
+        private ProjectilesPool CurrentProjectilesPool { get; set; }
 
         public virtual void Shoot ()
         {
-            GameObject projectile = GenerateProjectile();
-            Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
-            projectileRigidbody.AddForce(BulletSpawnTransform.forward * CurrentWeaponSetup.ShootingForce, ForceMode.Impulse);
+            Rigidbody projectile = GenerateProjectile();
+            projectile.AddForce(BulletSpawnTransform.forward * CurrentWeaponSetup.ShootingForce, ForceMode.Impulse);
         }
 
         protected virtual void Start ()
@@ -29,14 +28,13 @@ namespace ShooterMockUp.Weapon
         private void AddBulletToPool ()
         {
             Projectile targetProjectile = CurrentWeaponSetup.Projectile;
-            CurrentObjectPool.AddObjectToPool(targetProjectile.CurrentProjectileType, targetProjectile.gameObject);
+            CurrentProjectilesPool.AddObjectToPool(targetProjectile.CurrentProjectileType, CurrentWeaponSetup.Projectile.CurrentRigidbody);
         }
 
-        private GameObject GenerateProjectile ()
+        private Rigidbody GenerateProjectile ()
         {
-            GameObject projectile = CurrentObjectPool.GetObjectFromPool(CurrentWeaponSetup.Projectile.CurrentProjectileType);
-            projectile.transform.position = BulletSpawnTransform.position;
-            projectile.transform.rotation = BulletSpawnTransform.rotation;
+            Rigidbody projectile = CurrentProjectilesPool.GetObjectFromPool(CurrentWeaponSetup.Projectile.CurrentProjectileType);
+            projectile.transform.SetPositionAndRotation(BulletSpawnTransform.position, BulletSpawnTransform.rotation);
             
             return projectile;
         }

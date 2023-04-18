@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShooterMockUp.Tools
 {
-    public class ObjectPool : MonoBehaviour
+    public class ProjectilesPool : MonoBehaviour
     {
         private Dictionary<ProjectileType, List<Rigidbody>> PooledObjects { get; set; } = new Dictionary<ProjectileType, List<Rigidbody>>();
         private Dictionary<ProjectileType, Rigidbody> Prefabs { get; set; } = new Dictionary<ProjectileType, Rigidbody>();
@@ -64,9 +64,9 @@ namespace ShooterMockUp.Tools
         {
             if (projectile.TryGetComponent<Projectile>(out Projectile currentProjectile))
             {
-                if (currentProjectile.CurrentObjectPool == null)
+                if (currentProjectile.CurrentProjectilesPool == null)
                 {
-                    currentProjectile.CurrentObjectPool = this;
+                    currentProjectile.CurrentProjectilesPool = this;
                 }
             }
         }

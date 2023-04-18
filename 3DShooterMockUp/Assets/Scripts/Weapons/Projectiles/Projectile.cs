@@ -8,11 +8,15 @@ namespace ShooterMockUp.Weapon.Projectiles
     public class Projectile : MonoBehaviour
     {
         [field: SerializeField]
+        public Rigidbody CurrentRigidbody { get; set; }
+        [field: SerializeField]
         public ProjectileType CurrentProjectileType { get; set; }
         [field: SerializeField]
         private ProjectileSetup CurrentProjectileSetup { get; set; }
+        [field: SerializeField]
+        private LayerMask TargetLayers { get; set; }
         
-        public ObjectPool CurrentObjectPool { get; set; }
+        public ProjectilesPool CurrentProjectilesPool { get; set; }
         
         private float TimeToAutoDestroy { get; set; } = 3.0f;
 
@@ -29,23 +33,23 @@ namespace ShooterMockUp.Weapon.Projectiles
         private IEnumerator AutoDestroyProcess ()
         {
             yield return new WaitForSeconds(TimeToAutoDestroy);
-            CurrentObjectPool.ReturnObjectToPool(CurrentProjectileType, gameObject);
+            CurrentProjectilesPool.ReturnObjectToPool(CurrentProjectileType, CurrentRigidbody);
             StopAllCoroutines();
         }
 
         private void OnCollisionEnter (Collision other)
         {
             CheckForEnemies();
-            CurrentObjectPool.ReturnObjectToPool(CurrentProjectileType, gameObject);
+            CurrentProjectilesPool.ReturnObjectToPool(CurrentProjectileType, CurrentRigidbody);
         }
 
         private void CheckForEnemies ()
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, CurrentProjectileSetup.DamageRadius);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, CurrentProjectileSetup.DamageRadius, TargetLayers);
 
             foreach (Collider currentCollider in colliders)
             {
-                if (currentCollider.TryGetComponent<Enemy.Enemy>(out Enemy.Enemy enemy))
+                if (currentCollider.TryGetComponent(out Enemy.Enemy enemy))
                 {
                     enemy.HandleGettingDamage(CurrentProjectileSetup.Damage);
                 }
