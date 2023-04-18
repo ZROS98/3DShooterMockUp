@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2568209588750187940
 MonoBehaviour:
@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8b30f940984fe5a5c9eb2dd1ac7283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ProjectilePrefabsCollection>k__BackingField:
+  - {fileID: -2594661396909704567, guid: d0ceb46fdbc264f46818aaea62389e64, type: 3}
+  - {fileID: 1699161000581401048, guid: bf77305810de19342956119909f93055, type: 3}
   maxPoolSize: 10

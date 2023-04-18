@@ -6,12 +6,23 @@ namespace ShooterMockUp.Tools
 {
     public class ProjectilesPool : MonoBehaviour
     {
+        [field: SerializeField]
+        private List<Projectile> ProjectilePrefabsCollection { get; set; } 
+        
         private Dictionary<ProjectileType, List<Rigidbody>> PooledObjects { get; set; } = new Dictionary<ProjectileType, List<Rigidbody>>();
         private Dictionary<ProjectileType, Rigidbody> Prefabs { get; set; } = new Dictionary<ProjectileType, Rigidbody>();
 
         public int maxPoolSize = 10;
 
-        public void AddObjectToPool (ProjectileType projectileType, Rigidbody prefab)
+        protected virtual void Awake ()
+        {
+            foreach (Projectile projectile in ProjectilePrefabsCollection)
+            {
+                AddObjectToPool(projectile.CurrentProjectileType, projectile.CurrentRigidbody);
+            }
+        }
+        
+        private void AddObjectToPool (ProjectileType projectileType, Rigidbody prefab)
         {
             if (PooledObjects.ContainsKey(projectileType))
             {
@@ -62,7 +73,7 @@ namespace ShooterMockUp.Tools
         
         private void SetReferenceToObjectPool (Rigidbody projectile)
         {
-            if (projectile.TryGetComponent<Projectile>(out Projectile currentProjectile))
+            if (projectile.TryGetComponent(out Projectile currentProjectile))
             {
                 if (currentProjectile.CurrentProjectilesPool == null)
                 {

@@ -9,10 +9,6 @@ namespace ShooterMockUp.Weapon
             base.Shoot();
             Debug.Log("Fast weapon shoot");
         }
-
-        protected override void Start ()
-        {
-            base.Start();
-        }
+        
     }
 }
