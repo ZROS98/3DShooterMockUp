@@ -11,12 +11,10 @@ namespace ShooterMockUp.Enemy
         private EnemySetup CurrentEnemySetup { get; set; }
         [field: SerializeField]
         private Renderer CurrentRenderer { get; set; }
-        
+
         [field: SerializeField]
         private int HealthPoints { get; set; }
         private Coroutine ColorLerpCoroutine { get; set; }
-        
-        
 
         public void HandleGettingDamage (int damagePoints)
         {
@@ -34,8 +32,7 @@ namespace ShooterMockUp.Enemy
             HealthPoints = CurrentEnemySetup.HealthPoints;
             CurrentRenderer.material.color = CurrentEnemySetup.HighHealthPointsLevelColor;
         }
-
-        [ContextMenu("Start UpdateColorProcess")]
+        
         private void UpdateColor ()
         {
             ColorLerpCoroutine = StartCoroutine(UpdateColorProcess());
@@ -44,14 +41,14 @@ namespace ShooterMockUp.Enemy
         private IEnumerator UpdateColorProcess ()
         {
             float elapsedTime = 0f;
-            
+
             while (elapsedTime < CurrentEnemySetup.ColorLerpDuration)
             {
                 CurrentRenderer.material.color = Color.Lerp(CurrentRenderer.material.color, GetLerpedColor(), elapsedTime / CurrentEnemySetup.ColorLerpDuration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            
+
             CurrentRenderer.material.color = GetLerpedColor();
             CheckIfAlive();
             StopCoroutine(ColorLerpCoroutine);
@@ -62,8 +59,9 @@ namespace ShooterMockUp.Enemy
             Color lerpedColor;
             float percentage = GetPercentageFromHealthPoints(HealthPoints);
 
-            lerpedColor = percentage >= ProjectConstants.FIFTY_PERCENT ? Color.Lerp(CurrentEnemySetup.MediumHealthPointsLevelColor, CurrentEnemySetup.HighHealthPointsLevelColor, 
-                    (percentage - ProjectConstants.FIFTY_PERCENT) / ProjectConstants.FIFTY_PERCENT) 
+            lerpedColor = percentage >= ProjectConstants.FIFTY_PERCENT
+                ? Color.Lerp(CurrentEnemySetup.MediumHealthPointsLevelColor, CurrentEnemySetup.HighHealthPointsLevelColor,
+                    (percentage - ProjectConstants.FIFTY_PERCENT) / ProjectConstants.FIFTY_PERCENT)
                 : Color.Lerp(CurrentEnemySetup.LowHealthPointsLevelColor, CurrentEnemySetup.MediumHealthPointsLevelColor, percentage / ProjectConstants.FIFTY_PERCENT);
 
             return lerpedColor;

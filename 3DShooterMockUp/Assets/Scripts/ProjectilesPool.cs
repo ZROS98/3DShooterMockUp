@@ -61,7 +61,7 @@ namespace ShooterMockUp.Tools
 
             if (prefab != null)
             {
-                Rigidbody newObject = Instantiate(prefab);
+                Rigidbody newObject = Instantiate(prefab, transform, true);
                 newObject.name = prefab.name;
                 SetReferenceToObjectPool(newObject);
                 

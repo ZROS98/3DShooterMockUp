@@ -1,3 +1,4 @@
+using ShooterMockUp.Input;
 using ShooterMockUp.Utilities;
 using ShooterMockUp.Weapon;
 using UnityEngine;

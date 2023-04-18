@@ -1,3 +1,4 @@
+using ShooterMockUp.Input;
 using ShooterMockUp.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,30 +21,47 @@ namespace ShooterMockUp.Player
         [field: SerializeField]
         private float WalkSpeed { get; set; } = 10.0f;
         [field: SerializeField]
+        private float WalkSpeedAcceleration { get; set; } = 1.3f;
+        [field: SerializeField]
         private float JumpForce { get; set; } = 10.0f;
         [field: SerializeField]
         private float GroundCheckSphereRadius { get; set; } = 0.3f;
+
+        public ShooterMockUpInputActions CurrentInputActions { get; set; }
 
         private Vector2 MovementInput { get; set; }
         private float RotationAngle { get; set; } = 90.0f;
         private float CachedWalkSpeed { get; set; }
         private float CachedJumpForce { get; set; }
+        private bool IsPowerUpActivated { get; set; }
 
         public void ActivateMovementPowerUp (int powerUpPower)
         {
             ActivateSpeedPowerUp(powerUpPower);
             ActivateJumpPowerUp(powerUpPower);
+            IsPowerUpActivated = true;
         }
 
         public void DeactivatePowerUp ()
         {
             DeactivateSpeedPowerUp();
             DeactivateJumpPowerUp();
+            IsPowerUpActivated = false;
         }
 
         protected virtual void Awake ()
         {
             Initialize();
+        }
+        
+        protected virtual void OnEnable ()
+        {
+            AttachEvents();
+        }
+
+        protected virtual void OnDisable ()
+        {
+            DetachEvents();
         }
 
         protected virtual void FixedUpdate ()
@@ -120,6 +138,37 @@ namespace ShooterMockUp.Player
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(GroundCheckObject.position, GroundCheckSphereRadius);
+        }
+
+        private void HandleSprint (InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+            {
+                WalkSpeed *= WalkSpeedAcceleration;
+            }
+            else if (callbackContext.canceled)
+            {
+                if (IsPowerUpActivated == true)
+                {
+                    WalkSpeed /= WalkSpeedAcceleration;
+                }
+                else
+                {
+                    WalkSpeed = CachedWalkSpeed;
+                }
+            }
+        }
+
+        private void AttachEvents ()
+        {
+            CurrentInputActions.Player.Sprint.performed += HandleSprint;
+            CurrentInputActions.Player.Sprint.canceled += HandleSprint;
+        }
+
+        private void DetachEvents ()
+        {
+            CurrentInputActions.Player.Sprint.performed -= HandleSprint;
+            CurrentInputActions.Player.Sprint.canceled -= HandleSprint;
         }
     }
 }

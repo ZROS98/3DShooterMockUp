@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using ShooterMockUp.Input;
 using ShooterMockUp.PowerUp;
 using UnityEngine;
 
@@ -32,6 +33,7 @@ namespace ShooterMockUp.Player
             CurrentInputActions = new ShooterMockUpInputActions();
             CurrentInputActions.Player.Enable();
             CurrentPlayerShooting.CurrentInputActions = CurrentInputActions;
+            CurrentPlayerMovement.CurrentInputActions = CurrentInputActions;
         }
 
         private IEnumerator PowerUpProcess (PowerUpType powerUpType, int powerUpPower)
