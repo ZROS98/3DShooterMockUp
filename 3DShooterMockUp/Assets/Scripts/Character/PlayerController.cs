@@ -31,9 +31,7 @@ namespace ShooterMockUp.Player
         {
             CurrentInputActions = new ShooterMockUpInputActions();
             CurrentInputActions.Player.Enable();
-            CurrentInputActions.Player.Look.Enable();
             CurrentPlayerShooting.CurrentInputActions = CurrentInputActions;
-            CurrentPlayerLook.CurrentInputActions = CurrentInputActions;
         }
 
         private IEnumerator PowerUpProcess (PowerUpType powerUpType, int powerUpPower)

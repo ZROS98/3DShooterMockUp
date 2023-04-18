@@ -16,12 +16,14 @@ namespace ShooterMockUp.Player
 
         public void ActivateWeaponPowerUp (int powerUpPower)
         {
-            CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage = (CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage * (ProjectConstants.HUNDRED_PERCENT + powerUpPower)) / ProjectConstants.HUNDRED_PERCENT;
+            HandleWeaponPowerUp(CurrentSlowWeapon, powerUpPower);
+            HandleWeaponPowerUp(CurrentFastWeapon, powerUpPower);
         }
 
         public void DeactivatePowerUp ()
         {
-            CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage = CurrentSlowWeapon.CurrentWeaponSetup.Projectile.CurrentProjectileSetup.Damage;
+            HandleWeaponPowerDown(CurrentSlowWeapon);
+            HandleWeaponPowerDown(CurrentFastWeapon);
         }
 
         protected virtual void OnEnable ()
@@ -32,6 +34,16 @@ namespace ShooterMockUp.Player
         protected virtual void OnDisable ()
         {
             DetachEvents();
+        }
+        
+        private void HandleWeaponPowerUp (Weapon.Weapon weapon, int powerUpPower)
+        {
+            weapon.LocalDamage = (weapon.LocalDamage * (ProjectConstants.HUNDRED_PERCENT + powerUpPower)) / ProjectConstants.HUNDRED_PERCENT;
+        }
+        
+        private void HandleWeaponPowerDown (Weapon.Weapon weapon)
+        {
+            weapon.LocalDamage = weapon.CurrentWeaponSetup.Damage;
         }
 
         private void OnLeftMouseButtonActionUpdated (InputAction.CallbackContext context)

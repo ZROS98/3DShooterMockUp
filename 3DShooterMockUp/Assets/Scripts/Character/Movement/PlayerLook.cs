@@ -14,8 +14,6 @@ namespace ShooterMockUp.Player
         [field: SerializeField]
         private float MouseSensitivity { get; set; } = 100.0f;
 
-        public ShooterMockUpInputActions CurrentInputActions { get; set; }
-        
         private float RotationAxisX { get; set; } = 0.0f;
         private float RotationAxisY { get; set; } = 0.0f;
         private float MinAngleValue { get; set; } = -90.0f;

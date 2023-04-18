@@ -21,19 +21,9 @@ namespace ShooterMockUp.Weapon.Projectiles
         
         private float TimeToAutoDestroy { get; set; } = 3.0f;
 
-        protected virtual void Awake ()
-        {
-            Initialize();
-        }
-        
         protected virtual void OnEnable ()
         {
             StartAutoDestroy();
-        }
-
-        private void Initialize ()
-        {
-            LocalDamage = CurrentProjectileSetup.Damage;
         }
         
         private void StartAutoDestroy ( )

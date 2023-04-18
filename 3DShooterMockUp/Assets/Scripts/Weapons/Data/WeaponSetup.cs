@@ -15,9 +15,7 @@ namespace ShooterMockUp.Weapon.Data
         [field: SerializeField]
         public float ShootingForce { get; set; }
         [field: SerializeField]
-        public float ReloadTime { get; set; }
-        [field: SerializeField]
-        public float MagazineCapacity { get; set; }
+        public int Damage { get; set; }
 
         private const string ASSET_NAME = nameof(WeaponSetup);
     }
