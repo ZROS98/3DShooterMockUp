@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8810773845746445913}
   - component: {fileID: 8810773845746445914}
   - component: {fileID: 8810773845746445915}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BigEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,3 +121,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentEnemySetup>k__BackingField: {fileID: 11400000, guid: 80f4107ee3ce9ef45aef76b7a28d122e, type: 2}
+  <CurrentRenderer>k__BackingField: {fileID: 8810773845746445913}
+  <HealthPoints>k__BackingField: 0
