@@ -1,3 +1,4 @@
+using ShooterMockUp.Utilities;
 using ShooterMockUp.Weapon;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,11 +8,21 @@ namespace ShooterMockUp.Player
     public class PlayerShooting : MonoBehaviour
     {
         [field: SerializeField]
-        private SlowWeapon CurrentSlowWeapon { get; set; }
+        public SlowWeapon CurrentSlowWeapon { get; set; }
         [field: SerializeField]
-        private FastWeapon CurrentFastWeapon { get; set; }
+        public FastWeapon CurrentFastWeapon { get; set; }
 
         private ShooterMockUpInputActions CurrentInputActions { get; set; }
+
+        public void ActivateWeaponPowerUp (int powerUpPower)
+        {
+            CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage = (CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage * (ProjectConstants.HUNDRED_PERCENT + powerUpPower)) / ProjectConstants.HUNDRED_PERCENT;
+        }
+
+        public void DeactivatePowerUp ()
+        {
+            CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage = CurrentSlowWeapon.CurrentWeaponSetup.Projectile.CurrentProjectileSetup.Damage;
+        }
 
         protected virtual void Awake ()
         {

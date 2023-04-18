@@ -38,5 +38,10 @@ namespace ShooterMockUp.Weapon
             
             return projectile;
         }
+
+        public void ActivatePowerUp ()
+        {
+            
+        }
     }
 }

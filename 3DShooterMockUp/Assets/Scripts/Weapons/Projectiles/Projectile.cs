@@ -12,17 +12,28 @@ namespace ShooterMockUp.Weapon.Projectiles
         [field: SerializeField]
         public ProjectileType CurrentProjectileType { get; set; }
         [field: SerializeField]
-        private ProjectileSetup CurrentProjectileSetup { get; set; }
+        public ProjectileSetup CurrentProjectileSetup { get; set; }
         [field: SerializeField]
         private LayerMask TargetLayers { get; set; }
         
         public ProjectilesPool CurrentProjectilesPool { get; set; }
+        public int LocalDamage { get; set; }
         
         private float TimeToAutoDestroy { get; set; } = 3.0f;
 
+        protected virtual void Awake ()
+        {
+            Initialize();
+        }
+        
         protected virtual void OnEnable ()
         {
             StartAutoDestroy();
+        }
+
+        private void Initialize ()
+        {
+            LocalDamage = CurrentProjectileSetup.Damage;
         }
         
         private void StartAutoDestroy ( )
@@ -51,7 +62,7 @@ namespace ShooterMockUp.Weapon.Projectiles
             {
                 if (currentCollider.TryGetComponent(out Enemy.Enemy enemy))
                 {
-                    enemy.HandleGettingDamage(CurrentProjectileSetup.Damage);
+                    enemy.HandleGettingDamage(LocalDamage);
                 }
             }
         }

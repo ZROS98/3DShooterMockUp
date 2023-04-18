@@ -7,5 +7,8 @@
 
         public const string HEADER_REFERENCES = "References";
         public const string HEADER_SETTINGS = "Settings";
+        
+        public const int HUNDRED_PERCENT = 100;
+        public const int FIFTY_PERCENT = 50; 
     }
 }

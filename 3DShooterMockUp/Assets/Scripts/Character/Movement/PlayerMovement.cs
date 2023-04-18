@@ -18,19 +18,70 @@ namespace ShooterMockUp.Player
         [field: SerializeField]
         private LayerMask GroundLayer { get; set; }
         [field: SerializeField]
-        private float WalkSpeed = 10.0f;
+        private float WalkSpeed { get; set; } = 10.0f;
         [field: SerializeField]
-        private float JumpForce = 10.0f;
+        private float JumpForce { get; set; } = 10.0f;
         [field: SerializeField]
         private float GroundCheckSphereRadius { get; set; } = 0.3f;
 
         private Vector2 MovementInput { get; set; }
         private float RotationAngel { get; set; } = 90.0f;
+        private float CashedWalkSpeed { get; set; }
+        private float CashedJumpForce { get; set; }
+
+        public void ActivateMovementPowerUp (int powerUpPower)
+        {
+            ActivateSpeedPowerUp(powerUpPower);
+            ActivateJumpPowerUp(powerUpPower);
+        }
+
+        public void DeactivatePowerUp ()
+        {
+            DeactivateSpeedPowerUp();
+            DeactivateJumpPowerUp();
+        }
+
+        protected virtual void Awake ()
+        {
+            Initialize();
+        }
 
         protected virtual void FixedUpdate ()
         {
             RotateRigidbodyToCameraForward();
             Run();
+        }
+
+        private void ActivateSpeedPowerUp (int powerUpPower)
+        {
+            WalkSpeed = GetPowerUpPower(WalkSpeed, powerUpPower);
+        }
+
+        private void ActivateJumpPowerUp (int powerUpPower)
+        {
+            JumpForce = GetPowerUpPower(JumpForce, powerUpPower);
+        }
+
+        private float GetPowerUpPower (float powerType, int powerUpPower)
+        {
+            powerType = (powerType * (ProjectConstants.HUNDRED_PERCENT + powerUpPower)) / ProjectConstants.HUNDRED_PERCENT;
+            return powerType;
+        }
+
+        private void DeactivateSpeedPowerUp ()
+        {
+            WalkSpeed = CashedWalkSpeed;
+        }
+
+        private void DeactivateJumpPowerUp ()
+        {
+            JumpForce = CashedJumpForce;
+        }
+
+        private void Initialize ()
+        {
+            CashedWalkSpeed = WalkSpeed;
+            CashedJumpForce = JumpForce;
         }
 
         private void RotateRigidbodyToCameraForward ()

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using ShooterMockUp.Enemies.Data;
+using ShooterMockUp.Utilities;
 using UnityEngine;
 
 namespace ShooterMockUp.Enemy
@@ -15,8 +16,7 @@ namespace ShooterMockUp.Enemy
         private int HealthPoints { get; set; }
         private Coroutine ColorLerpCoroutine { get; set; }
         
-        private const int HUNDRED_PERCENT = 100;
-        private const int FIFTY_PERCENT = 50;
+        
 
         public void HandleGettingDamage (int damagePoints)
         {
@@ -62,15 +62,16 @@ namespace ShooterMockUp.Enemy
             Color lerpedColor;
             float percentage = GetPercentageFromHealthPoints(HealthPoints);
 
-            lerpedColor = percentage >= FIFTY_PERCENT ? Color.Lerp(CurrentEnemySetup.MediumHealthPointsLevelColor, CurrentEnemySetup.HighHealthPointsLevelColor, (percentage - FIFTY_PERCENT) / FIFTY_PERCENT) 
-                : Color.Lerp(CurrentEnemySetup.LowHealthPointsLevelColor, CurrentEnemySetup.MediumHealthPointsLevelColor, percentage / FIFTY_PERCENT);
+            lerpedColor = percentage >= ProjectConstants.FIFTY_PERCENT ? Color.Lerp(CurrentEnemySetup.MediumHealthPointsLevelColor, CurrentEnemySetup.HighHealthPointsLevelColor, 
+                    (percentage - ProjectConstants.FIFTY_PERCENT) / ProjectConstants.FIFTY_PERCENT) 
+                : Color.Lerp(CurrentEnemySetup.LowHealthPointsLevelColor, CurrentEnemySetup.MediumHealthPointsLevelColor, percentage / ProjectConstants.FIFTY_PERCENT);
 
             return lerpedColor;
         }
 
         private float GetPercentageFromHealthPoints (float healthPoints)
         {
-            float percentage = (healthPoints / CurrentEnemySetup.HealthPoints) * HUNDRED_PERCENT;
+            float percentage = (healthPoints / CurrentEnemySetup.HealthPoints) * ProjectConstants.HUNDRED_PERCENT;
             return percentage;
         }
 
