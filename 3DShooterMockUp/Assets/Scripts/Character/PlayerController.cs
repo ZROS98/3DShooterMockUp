@@ -14,11 +14,26 @@ namespace ShooterMockUp.Player
         public PlayerShooting CurrentPlayerShooting { get; set; }
 
         private WaitForSeconds PowerUpDurationTimer { get; set; }
+        private ShooterMockUpInputActions CurrentInputActions { get; set; }
 
         public void HandlePowerUp (PowerUpType powerUpType, float powerUpDuration, int powerUpPower)
         {
             PowerUpDurationTimer = new WaitForSeconds(powerUpDuration);
             StartCoroutine(PowerUpProcess(powerUpType, powerUpPower));
+        }
+        
+        protected virtual void Awake ()
+        {
+            ManageInputs();
+        }
+        
+        private void ManageInputs ()
+        {
+            CurrentInputActions = new ShooterMockUpInputActions();
+            CurrentInputActions.Player.Enable();
+            CurrentInputActions.Player.Look.Enable();
+            CurrentPlayerShooting.CurrentInputActions = CurrentInputActions;
+            CurrentPlayerLook.CurrentInputActions = CurrentInputActions;
         }
 
         private IEnumerator PowerUpProcess (PowerUpType powerUpType, int powerUpPower)

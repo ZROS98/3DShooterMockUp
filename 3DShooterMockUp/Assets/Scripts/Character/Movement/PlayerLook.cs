@@ -1,6 +1,6 @@
 using ShooterMockUp.Utilities;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem;
 
 namespace ShooterMockUp.Player
 {
@@ -9,18 +9,19 @@ namespace ShooterMockUp.Player
         [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
         private Transform PlayerCamera { get; set; }
-        [FormerlySerializedAs("cameraAttachPoint")]
-        [SerializeField]
-        private Transform CameraAttachPoint;
 
         [field: Header(ProjectConstants.HEADER_SETTINGS)]
         [field: SerializeField]
         private float MouseSensitivity { get; set; } = 100.0f;
 
+        public ShooterMockUpInputActions CurrentInputActions { get; set; }
+        
         private float RotationAxisX { get; set; } = 0.0f;
         private float RotationAxisY { get; set; } = 0.0f;
         private float MinAngleValue { get; set; } = -90.0f;
         private float MaxAngleValue { get; set; } = 90.0f;
+        
+        private Vector2 MouseDelta { get; set; }
 
         protected virtual void Start ()
         {
@@ -40,15 +41,19 @@ namespace ShooterMockUp.Player
 
         private void HandleRotation ()
         {
-            float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
+            float mouseX = MouseDelta.x * MouseSensitivity * Time.deltaTime;
+            float mouseY = MouseDelta.y * MouseSensitivity * Time.deltaTime;
 
             RotationAxisX -= mouseY;
             RotationAxisX = Mathf.Clamp(RotationAxisX, MinAngleValue, MaxAngleValue);
             RotationAxisY += mouseX;
 
             PlayerCamera.rotation = Quaternion.Euler(RotationAxisX, RotationAxisY, 0f);
-            PlayerCamera.transform.position = CameraAttachPoint.position;
+        }
+
+        private void OnLook (InputValue inputValue)
+        {
+            MouseDelta = inputValue.Get<Vector2>();
         }
     }
 }

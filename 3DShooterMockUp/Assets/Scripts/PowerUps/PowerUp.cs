@@ -7,7 +7,7 @@ namespace ShooterMockUp.PowerUp
     public class PowerUp : MonoBehaviour
     {
         [field: SerializeField]
-        private PowerUpSetup CurrenPowerUpSetup { get; set; }
+        private PowerUpSetup CurrentPowerUpSetup { get; set; }
 
         protected virtual void OnCollisionEnter (Collision collider)
         {
@@ -18,7 +18,7 @@ namespace ShooterMockUp.PowerUp
         {
             if (collider.gameObject.TryGetComponent(out PlayerController playerController))
             {
-                playerController.HandlePowerUp(CurrenPowerUpSetup.CurrentPowerUpType, CurrenPowerUpSetup.PowerUpDuration, CurrenPowerUpSetup.PowerUpPower);
+                playerController.HandlePowerUp(CurrentPowerUpSetup.CurrentPowerUpType, CurrentPowerUpSetup.PowerUpDuration, CurrentPowerUpSetup.PowerUpPower);
                 
                 Destroy(gameObject);
             }

@@ -12,7 +12,7 @@ namespace ShooterMockUp.Player
         [field: SerializeField]
         public FastWeapon CurrentFastWeapon { get; set; }
 
-        private ShooterMockUpInputActions CurrentInputActions { get; set; }
+        public ShooterMockUpInputActions CurrentInputActions { get; set; }
 
         public void ActivateWeaponPowerUp (int powerUpPower)
         {
@@ -24,11 +24,6 @@ namespace ShooterMockUp.Player
             CurrentSlowWeapon.CurrentWeaponSetup.Projectile.LocalDamage = CurrentSlowWeapon.CurrentWeaponSetup.Projectile.CurrentProjectileSetup.Damage;
         }
 
-        protected virtual void Awake ()
-        {
-            ManageInputs();
-        }
-
         protected virtual void OnEnable ()
         {
             AttachEvents();
@@ -37,12 +32,6 @@ namespace ShooterMockUp.Player
         protected virtual void OnDisable ()
         {
             DetachEvents();
-        }
-
-        private void ManageInputs ()
-        {
-            CurrentInputActions = new ShooterMockUpInputActions();
-            CurrentInputActions.Player.Enable();
         }
 
         private void OnLeftMouseButtonActionUpdated (InputAction.CallbackContext context)

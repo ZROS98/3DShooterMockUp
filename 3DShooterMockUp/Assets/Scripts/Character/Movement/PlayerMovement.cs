@@ -25,9 +25,9 @@ namespace ShooterMockUp.Player
         private float GroundCheckSphereRadius { get; set; } = 0.3f;
 
         private Vector2 MovementInput { get; set; }
-        private float RotationAngel { get; set; } = 90.0f;
-        private float CashedWalkSpeed { get; set; }
-        private float CashedJumpForce { get; set; }
+        private float RotationAngle { get; set; } = 90.0f;
+        private float CachedWalkSpeed { get; set; }
+        private float CachedJumpForce { get; set; }
 
         public void ActivateMovementPowerUp (int powerUpPower)
         {
@@ -70,24 +70,24 @@ namespace ShooterMockUp.Player
 
         private void DeactivateSpeedPowerUp ()
         {
-            WalkSpeed = CashedWalkSpeed;
+            WalkSpeed = CachedWalkSpeed;
         }
 
         private void DeactivateJumpPowerUp ()
         {
-            JumpForce = CashedJumpForce;
+            JumpForce = CachedJumpForce;
         }
 
         private void Initialize ()
         {
-            CashedWalkSpeed = WalkSpeed;
-            CashedJumpForce = JumpForce;
+            CachedWalkSpeed = WalkSpeed;
+            CachedJumpForce = JumpForce;
         }
 
         private void RotateRigidbodyToCameraForward ()
         {
-            Vector3 cameraForward = -PlayerCamera.forward;
-            Quaternion desiredRotation = Quaternion.LookRotation(Vector3.up, cameraForward) * Quaternion.AngleAxis(RotationAngel, Vector3.right);
+            Vector3 cameraForward = PlayerCamera.forward * -1.0f;
+            Quaternion desiredRotation = Quaternion.LookRotation(Vector3.up, cameraForward) * Quaternion.AngleAxis(RotationAngle, Vector3.right);
 
             CurrentRigidbody.rotation = desiredRotation;
         }
