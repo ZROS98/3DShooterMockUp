@@ -926,6 +926,10 @@ PrefabInstance:
       propertyPath: <BulletSpawnTransform>k__BackingField
       value: 
       objectReference: {fileID: 1191597190}
+    - target: {fileID: 6461101105706216440, guid: a36626ec6de0cf04a96eafcb70d2b6dc, type: 3}
+      propertyPath: <CurrentProjectilesPool>k__BackingField
+      value: 
+      objectReference: {fileID: 1080136273}
     - target: {fileID: 9069161373468742629, guid: a36626ec6de0cf04a96eafcb70d2b6dc, type: 3}
       propertyPath: <CurrentObjectPool>k__BackingField
       value: 
@@ -934,6 +938,10 @@ PrefabInstance:
       propertyPath: <BulletSpawnTransform>k__BackingField
       value: 
       objectReference: {fileID: 1191597190}
+    - target: {fileID: 9069161373468742629, guid: a36626ec6de0cf04a96eafcb70d2b6dc, type: 3}
+      propertyPath: <CurrentProjectilesPool>k__BackingField
+      value: 
+      objectReference: {fileID: 1080136273}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
