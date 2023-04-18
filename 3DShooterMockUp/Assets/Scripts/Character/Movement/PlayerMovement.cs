@@ -1,3 +1,4 @@
+using System;
 using ShooterMockUp.Input;
 using ShooterMockUp.Utilities;
 using UnityEngine;
@@ -28,6 +29,8 @@ namespace ShooterMockUp.Player
         private float GroundCheckSphereRadius { get; set; } = 0.3f;
 
         public ShooterMockUpInputActions CurrentInputActions { get; set; }
+        
+        public event Action<PlayerState> OnPlayerStateChanged = delegate (PlayerState state) { };
 
         private Vector2 MovementInput { get; set; }
         private float RotationAngle { get; set; } = 90.0f;
@@ -119,6 +122,7 @@ namespace ShooterMockUp.Player
         private void OnMove (InputValue inputValue)
         {
             MovementInput = inputValue.Get<Vector2>();
+            OnPlayerStateChanged.Invoke(PlayerState.MOVING);
         }
 
         private void OnJump (InputValue inputValue)
@@ -126,6 +130,7 @@ namespace ShooterMockUp.Player
             if (inputValue.isPressed && IsGrounded() == true)
             {
                 CurrentRigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+                OnPlayerStateChanged.Invoke(PlayerState.JUMPING);
             }
         }
 
@@ -157,6 +162,8 @@ namespace ShooterMockUp.Player
                     WalkSpeed = CachedWalkSpeed;
                 }
             }
+            
+            OnPlayerStateChanged.Invoke(PlayerState.SPRINTING);
         }
 
         private void AttachEvents ()

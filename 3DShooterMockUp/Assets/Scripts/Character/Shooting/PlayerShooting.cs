@@ -1,3 +1,4 @@
+using System;
 using ShooterMockUp.Input;
 using ShooterMockUp.Utilities;
 using ShooterMockUp.Weapon;
@@ -14,6 +15,8 @@ namespace ShooterMockUp.Player
         public FastWeapon CurrentFastWeapon { get; set; }
 
         public ShooterMockUpInputActions CurrentInputActions { get; set; }
+
+        public event Action<PlayerState> OnPlayerStateChanged = delegate (PlayerState state) { };
 
         public void ActivateWeaponPowerUp (int powerUpPower)
         {
@@ -36,12 +39,12 @@ namespace ShooterMockUp.Player
         {
             DetachEvents();
         }
-        
+
         private void HandleWeaponPowerUp (Weapon.Weapon weapon, int powerUpPower)
         {
             weapon.LocalDamage = (weapon.LocalDamage * (ProjectConstants.HUNDRED_PERCENT + powerUpPower)) / ProjectConstants.HUNDRED_PERCENT;
         }
-        
+
         private void HandleWeaponPowerDown (Weapon.Weapon weapon)
         {
             weapon.LocalDamage = weapon.CurrentWeaponSetup.Damage;
@@ -49,15 +52,14 @@ namespace ShooterMockUp.Player
 
         private void OnLeftMouseButtonActionUpdated (InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                CurrentFastWeapon.Shoot();
-            }
+            CurrentFastWeapon.Shoot();
+            OnPlayerStateChanged.Invoke(PlayerState.SHOOTING);
         }
 
         private void OnRightMouseButtonActionUpdated (InputAction.CallbackContext context)
         {
             CurrentSlowWeapon.Shoot();
+            OnPlayerStateChanged.Invoke(PlayerState.SHOOTING);
         }
 
         private void AttachEvents ()

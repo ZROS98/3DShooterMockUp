@@ -13,6 +13,8 @@ namespace ShooterMockUp.Player
         public PlayerLook CurrentPlayerLook { get; set; }
         [field: SerializeField]
         public PlayerShooting CurrentPlayerShooting { get; set; }
+        [field: SerializeField]
+        private PlayerUI CurrentPlayerUI { get; set; }
 
         private WaitForSeconds PowerUpDurationTimer { get; set; }
         private ShooterMockUpInputActions CurrentInputActions { get; set; }
@@ -21,13 +23,24 @@ namespace ShooterMockUp.Player
         {
             PowerUpDurationTimer = new WaitForSeconds(powerUpDuration);
             StartCoroutine(PowerUpProcess(powerUpType, powerUpPower));
+            CurrentPlayerUI.UpdatePlayerStateText(PlayerState.POWER_UPPED);
         }
-        
+
         protected virtual void Awake ()
         {
             ManageInputs();
         }
-        
+
+        protected virtual void OnEnable ()
+        {
+            AttachEvents();
+        }
+
+        protected virtual void OnDisable ()
+        {
+            DetachEvents();
+        }
+
         private void ManageInputs ()
         {
             CurrentInputActions = new ShooterMockUpInputActions();
@@ -47,10 +60,10 @@ namespace ShooterMockUp.Player
         {
             switch (powerUpType)
             {
-                case PowerUpType.DamagePowerUp:
+                case PowerUpType.DAMAGE_POWER_UP:
                     CurrentPlayerShooting.ActivateWeaponPowerUp(powerUpPower);
                     break;
-                case PowerUpType.SpeedPowerUp:
+                case PowerUpType.SPEED_POWER_UP:
                     CurrentPlayerMovement.ActivateMovementPowerUp(powerUpPower);
                     break;
             }
@@ -60,13 +73,25 @@ namespace ShooterMockUp.Player
         {
             switch (powerUpType)
             {
-                case PowerUpType.DamagePowerUp:
+                case PowerUpType.DAMAGE_POWER_UP:
                     CurrentPlayerShooting.DeactivatePowerUp();
                     break;
-                case PowerUpType.SpeedPowerUp:
+                case PowerUpType.SPEED_POWER_UP:
                     CurrentPlayerMovement.DeactivatePowerUp();
                     break;
             }
+        }
+
+        private void AttachEvents ()
+        {
+            CurrentPlayerMovement.OnPlayerStateChanged += CurrentPlayerUI.UpdatePlayerStateText;
+            CurrentPlayerShooting.OnPlayerStateChanged += CurrentPlayerUI.UpdatePlayerStateText;
+        }
+
+        private void DetachEvents ()
+        {
+            CurrentPlayerMovement.OnPlayerStateChanged -= CurrentPlayerUI.UpdatePlayerStateText;
+            CurrentPlayerShooting.OnPlayerStateChanged -= CurrentPlayerUI.UpdatePlayerStateText;
         }
     }
 }

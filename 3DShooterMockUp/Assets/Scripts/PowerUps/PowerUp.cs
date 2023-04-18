@@ -19,7 +19,6 @@ namespace ShooterMockUp.PowerUp
             if (collider.gameObject.TryGetComponent(out PlayerController playerController))
             {
                 playerController.HandlePowerUp(CurrentPowerUpSetup.CurrentPowerUpType, CurrentPowerUpSetup.PowerUpDuration, CurrentPowerUpSetup.PowerUpPower);
-                
                 Destroy(gameObject);
             }
         }

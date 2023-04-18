@@ -2,7 +2,7 @@
 {
     public enum PowerUpType
     {
-        SpeedPowerUp,
-        DamagePowerUp
+        SPEED_POWER_UP,
+        DAMAGE_POWER_UP
     }
 }
