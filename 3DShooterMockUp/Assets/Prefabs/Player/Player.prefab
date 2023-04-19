@@ -673,9 +673,9 @@ MonoBehaviour:
   <GroundLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
-  <WalkSpeed>k__BackingField: 10
+  <WalkSpeed>k__BackingField: 5
   <WalkSpeedAcceleration>k__BackingField: 1.3
-  <JumpForce>k__BackingField: 10
+  <JumpForce>k__BackingField: 5
   <GroundCheckSphereRadius>k__BackingField: 0.3
 --- !u!114 &5084600318283143483
 MonoBehaviour:
