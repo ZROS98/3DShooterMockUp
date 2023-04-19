@@ -16,8 +16,8 @@ namespace ShooterMockUp.Player
 
         private float RotationAxisX { get; set; } = 0.0f;
         private float RotationAxisY { get; set; } = 0.0f;
-        private float MinAngleValue { get; set; } = -90.0f;
-        private float MaxAngleValue { get; set; } = 90.0f;
+        private float MinAngleValue { get; set; } = -45.0f;
+        private float MaxAngleValue { get; set; } = 45.0f;
         
         private Vector2 MouseDelta { get; set; }
 
