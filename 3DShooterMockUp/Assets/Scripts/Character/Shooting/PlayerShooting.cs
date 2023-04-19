@@ -30,7 +30,7 @@ namespace ShooterMockUp.Player
             HandleWeaponPowerDown(CurrentFastWeapon);
         }
 
-        protected virtual void OnEnable ()
+        protected virtual void Start ()
         {
             AttachEvents();
         }

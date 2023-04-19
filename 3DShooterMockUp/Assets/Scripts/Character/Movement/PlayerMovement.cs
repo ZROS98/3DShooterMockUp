@@ -57,7 +57,7 @@ namespace ShooterMockUp.Player
             Initialize();
         }
         
-        protected virtual void OnEnable ()
+        protected virtual void Start ()
         {
             AttachEvents();
         }
