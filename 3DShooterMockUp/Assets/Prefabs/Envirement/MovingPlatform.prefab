@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa20da2d4684f8da86424ca3e90dbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentRigidbody>k__BackingField: {fileID: 8150781673086527952}
   <StartPoint>k__BackingField: {fileID: 8150781672133839992}
   <EndPoint>k__BackingField: {fileID: 8150781673123303941}
   <Speed>k__BackingField: 4
@@ -244,5 +243,5 @@ Transform:
   - {fileID: 8150781672133839992}
   - {fileID: 8150781673123303941}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
