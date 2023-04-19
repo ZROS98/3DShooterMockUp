@@ -1,7 +1,5 @@
-using System;
 using ShooterMockUp.Input;
 using ShooterMockUp.Utilities;
-using ShooterMockUp.Weapon;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +7,11 @@ namespace ShooterMockUp.Player
 {
     public class PlayerShooting : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
-        public SlowWeapon CurrentSlowWeapon { get; set; }
+        public Weapons.Weapon CurrentSlowWeapon { get; set; }
         [field: SerializeField]
-        public FastWeapon CurrentFastWeapon { get; set; }
+        public Weapons.Weapon CurrentFastWeapon { get; set; }
 
         public ShooterMockUpInputActions CurrentInputActions { get; set; }
 
@@ -38,12 +37,12 @@ namespace ShooterMockUp.Player
             DetachEvents();
         }
 
-        private void HandleWeaponPowerUp (Weapon.Weapon weapon, int powerUpPower)
+        private void HandleWeaponPowerUp (Weapons.Weapon weapon, int powerUpPower)
         {
             weapon.LocalDamage = (weapon.LocalDamage * (ProjectConstants.HUNDRED_PERCENT + powerUpPower)) / ProjectConstants.HUNDRED_PERCENT;
         }
 
-        private void HandleWeaponPowerDown (Weapon.Weapon weapon)
+        private void HandleWeaponPowerDown (Weapons.Weapon weapon)
         {
             weapon.LocalDamage = weapon.CurrentWeaponSetup.Damage;
         }

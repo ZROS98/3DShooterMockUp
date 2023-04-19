@@ -7,12 +7,12 @@ namespace ShooterMockUp.Enemy
 {
     public class Enemy : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
         private EnemySetup CurrentEnemySetup { get; set; }
         [field: SerializeField]
         private Renderer CurrentRenderer { get; set; }
-
-        [field: SerializeField]
+        
         private int HealthPoints { get; set; }
         private Coroutine ColorLerpCoroutine { get; set; }
 

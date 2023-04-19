@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ShooterMockUp.Utilities;
 using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
 
@@ -6,13 +7,16 @@ namespace ShooterMockUp.Tools
 {
     public class ProjectilesPool : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
-        private List<Projectile> ProjectilePrefabsCollection { get; set; } 
-        
+        private List<Projectile> ProjectilePrefabsCollection { get; set; }
+
+        [field: Header(ProjectConstants.HEADER_SETTINGS)]
+        [field: SerializeField]
+        public int MaxPoolSize { get; set; } = 10;
+
         private Dictionary<ProjectileType, List<Rigidbody>> PooledObjects { get; set; } = new Dictionary<ProjectileType, List<Rigidbody>>();
         private Dictionary<ProjectileType, Rigidbody> Prefabs { get; set; } = new Dictionary<ProjectileType, Rigidbody>();
-
-        public int maxPoolSize = 10;
 
         protected virtual void Awake ()
         {
@@ -21,7 +25,7 @@ namespace ShooterMockUp.Tools
                 AddObjectToPool(projectile.CurrentProjectileType, projectile.CurrentRigidbody);
             }
         }
-        
+
         private void AddObjectToPool (ProjectileType projectileType, Rigidbody prefab)
         {
             if (PooledObjects.ContainsKey(projectileType))
@@ -42,7 +46,7 @@ namespace ShooterMockUp.Tools
                     Rigidbody currentObject = objectList[0];
                     objectList.RemoveAt(0);
                     currentObject.gameObject.SetActive(true);
-                    
+
                     return currentObject;
                 }
                 else
@@ -64,13 +68,13 @@ namespace ShooterMockUp.Tools
                 Rigidbody newObject = Instantiate(prefab, transform, true);
                 newObject.name = prefab.name;
                 SetReferenceToObjectPool(newObject);
-                
+
                 return rigidbody;
             }
 
             return null;
         }
-        
+
         private void SetReferenceToObjectPool (Rigidbody projectile)
         {
             if (projectile.TryGetComponent(out Projectile currentProjectile))
@@ -90,7 +94,7 @@ namespace ShooterMockUp.Tools
                 currentObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
                 currentObject.velocity = Vector3.zero;
 
-                if (objectList.Count < maxPoolSize)
+                if (objectList.Count < MaxPoolSize)
                 {
                     currentObject.gameObject.SetActive(false);
                     objectList.Add(currentObject);

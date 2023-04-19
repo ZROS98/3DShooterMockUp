@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using ShooterMockUp.Input;
 using ShooterMockUp.PowerUp;
+using ShooterMockUp.Utilities;
 using UnityEngine;
 
 namespace ShooterMockUp.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
         public PlayerMovement CurrentPlayerMovement { get; set; }
         [field: SerializeField]

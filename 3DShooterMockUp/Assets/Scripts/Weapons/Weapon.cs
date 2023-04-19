@@ -1,12 +1,14 @@
 using ShooterMockUp.Tools;
+using ShooterMockUp.Utilities;
 using ShooterMockUp.Weapon.Data;
 using ShooterMockUp.Weapon.Projectiles;
 using UnityEngine;
 
-namespace ShooterMockUp.Weapon
+namespace ShooterMockUp.Weapons
 {
     public class Weapon : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
         public WeaponSetup CurrentWeaponSetup { get; set; }
         [field: SerializeField]

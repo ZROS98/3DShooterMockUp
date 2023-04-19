@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using ShooterMockUp.Tools;
+using ShooterMockUp.Utilities;
 using ShooterMockUp.Weapon.Projectiles.Data;
 using UnityEngine;
 
@@ -7,19 +8,20 @@ namespace ShooterMockUp.Weapon.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
         public Rigidbody CurrentRigidbody { get; set; }
         [field: SerializeField]
         public ProjectileType CurrentProjectileType { get; set; }
         [field: SerializeField]
         public ProjectileSetup CurrentProjectileSetup { get; set; }
+        
+        [field: Header(ProjectConstants.HEADER_SETTINGS)]
         [field: SerializeField]
         private LayerMask TargetLayers { get; set; }
         
         public ProjectilesPool CurrentProjectilesPool { get; set; }
         public int LocalDamage { get; set; }
-        
-        private float TimeToAutoDestroy { get; set; } = 3.0f;
 
         protected virtual void OnEnable ()
         {
@@ -33,7 +35,7 @@ namespace ShooterMockUp.Weapon.Projectiles
 
         private IEnumerator AutoDestroyProcess ()
         {
-            yield return new WaitForSeconds(TimeToAutoDestroy);
+            yield return new WaitForSeconds(CurrentProjectileSetup.TimeToAutoDestroy);
             CurrentProjectilesPool.ReturnObjectToPool(CurrentProjectileType, CurrentRigidbody);
             StopAllCoroutines();
         }

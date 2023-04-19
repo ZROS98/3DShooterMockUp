@@ -1,14 +1,18 @@
 ﻿using System.Collections;
+using ShooterMockUp.Utilities;
 using UnityEngine;
 
 namespace ShooterMockUp.Envirement
 {
     public class MovingObject : MonoBehaviour
     {
+        [field: Header(ProjectConstants.HEADER_REFERENCES)]
         [field: SerializeField]
         public Transform StartPoint { get; set; }
         [field: SerializeField]
         public Transform EndPoint { get; set; }
+
+        [field: Header(ProjectConstants.HEADER_SETTINGS)]
         [field: SerializeField]
         public float Speed { get; set; }
 

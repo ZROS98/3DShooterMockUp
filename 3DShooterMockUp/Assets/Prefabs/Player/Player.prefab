@@ -779,8 +779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1755089d17f417a409dff042ccda7ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentSlowWeapon>k__BackingField: {fileID: 9069161373468742629}
-  <CurrentFastWeapon>k__BackingField: {fileID: 6461101105706216440}
+  <CurrentSlowWeapon>k__BackingField: {fileID: 4974222471412527151}
+  <CurrentFastWeapon>k__BackingField: {fileID: 6681213286407701512}
 --- !u!114 &2069355197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,6 +864,10 @@ PrefabInstance:
       propertyPath: <BulletSpawnTransform>k__BackingField
       value: 
       objectReference: {fileID: 3579634175996586848}
+    - target: {fileID: 6162116941593998216, guid: 361c4268d3bd1c04dbad1a093b51f4d4, type: 3}
+      propertyPath: <BulletSpawnTransform>k__BackingField
+      value: 
+      objectReference: {fileID: 3579634175996586848}
     - target: {fileID: 8476416843983639309, guid: 361c4268d3bd1c04dbad1a093b51f4d4, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -913,15 +917,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361c4268d3bd1c04dbad1a093b51f4d4, type: 3}
---- !u!114 &6461101105706216440 stripped
+--- !u!114 &6681213286407701512 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5806896497741225080, guid: 361c4268d3bd1c04dbad1a093b51f4d4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6162116941593998216, guid: 361c4268d3bd1c04dbad1a093b51f4d4, type: 3}
   m_PrefabInstance: {fileID: 665491095371904896}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc4074dc7d551144894811984295444, type: 3}
+  m_Script: {fileID: 11500000, guid: 40d837904aca2874aa1417f236006637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8979619748192691341 stripped
@@ -938,6 +942,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 3579634175996586848}
     m_Modifications:
     - target: {fileID: 150983693923344231, guid: 01c05d55b5c661740925fd694fc778e8, type: 3}
+      propertyPath: <BulletSpawnTransform>k__BackingField
+      value: 
+      objectReference: {fileID: 3579634175996586848}
+    - target: {fileID: 4234430466086550701, guid: 01c05d55b5c661740925fd694fc778e8, type: 3}
       propertyPath: <BulletSpawnTransform>k__BackingField
       value: 
       objectReference: {fileID: 3579634175996586848}
@@ -1003,14 +1011,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4504892731375250626, guid: 01c05d55b5c661740925fd694fc778e8, type: 3}
   m_PrefabInstance: {fileID: 9206559307370400898}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9069161373468742629 stripped
+--- !u!114 &4974222471412527151 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 150983693923344231, guid: 01c05d55b5c661740925fd694fc778e8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4234430466086550701, guid: 01c05d55b5c661740925fd694fc778e8, type: 3}
   m_PrefabInstance: {fileID: 9206559307370400898}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a378192762b494d8022c6e016b5d304, type: 3}
+  m_Script: {fileID: 11500000, guid: 40d837904aca2874aa1417f236006637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
