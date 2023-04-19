@@ -29,14 +29,17 @@ namespace ShooterMockUp.Player
         private float GroundCheckSphereRadius { get; set; } = 0.3f;
 
         public ShooterMockUpInputActions CurrentInputActions { get; set; }
-        
-        public event Action<PlayerState> OnPlayerStateChanged = delegate (PlayerState state) { };
+
+        public event Action<PlayerState> OnPlayerStateChanged = delegate { };
 
         private Vector2 MovementInput { get; set; }
         private float RotationAngle { get; set; } = 90.0f;
         private float CachedWalkSpeed { get; set; }
         private float CachedJumpForce { get; set; }
         private bool IsPowerUpActivated { get; set; }
+        private bool IsPlayerWalking { get; set; }
+        private bool IsPlayerSprinting { get; set; }
+        private bool IsPlayerJumping { get; set; }
 
         public void ActivateMovementPowerUp (int powerUpPower)
         {
@@ -56,7 +59,7 @@ namespace ShooterMockUp.Player
         {
             Initialize();
         }
-        
+
         protected virtual void Start ()
         {
             AttachEvents();
@@ -117,12 +120,16 @@ namespace ShooterMockUp.Player
         {
             Vector3 playerVelocity = new Vector3(MovementInput.x * WalkSpeed, CurrentRigidbody.velocity.y, MovementInput.y * WalkSpeed);
             CurrentRigidbody.velocity = transform.TransformDirection(playerVelocity);
+
+            if (IsPlayerWalking == true && IsPlayerSprinting == false && IsPlayerJumping == false)
+            {
+                OnPlayerStateChanged.Invoke(PlayerState.MOVING);
+            }
         }
 
         private void OnMove (InputValue inputValue)
         {
             MovementInput = inputValue.Get<Vector2>();
-            OnPlayerStateChanged.Invoke(PlayerState.MOVING);
         }
 
         private void OnJump (InputValue inputValue)
@@ -130,7 +137,6 @@ namespace ShooterMockUp.Player
             if (inputValue.isPressed && IsGrounded() == true)
             {
                 CurrentRigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
-                OnPlayerStateChanged.Invoke(PlayerState.JUMPING);
             }
         }
 
@@ -150,6 +156,8 @@ namespace ShooterMockUp.Player
             if (callbackContext.performed)
             {
                 WalkSpeed *= WalkSpeedAcceleration;
+                OnPlayerStateChanged.Invoke(PlayerState.SPRINTING);
+                IsPlayerSprinting = true;
             }
             else if (callbackContext.canceled)
             {
@@ -161,21 +169,69 @@ namespace ShooterMockUp.Player
                 {
                     WalkSpeed = CachedWalkSpeed;
                 }
+
+                OnPlayerStateChanged.Invoke(IsPlayerWalking == false ? PlayerState.IDLE : PlayerState.MOVING);
+                IsPlayerSprinting = false;
             }
-            
-            OnPlayerStateChanged.Invoke(PlayerState.SPRINTING);
+        }
+
+        private void HandlePlayerStateOnMove (InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+            {
+                IsPlayerWalking = true;
+            }
+            else if (callbackContext.canceled)
+            {
+                IsPlayerWalking = false;
+                OnPlayerStateChanged.Invoke(PlayerState.IDLE);
+            }
+        }
+
+        private void HandleStateOnJump (InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+            {
+                IsPlayerJumping = true;
+                OnPlayerStateChanged.Invoke(PlayerState.JUMPING);
+            }
+            else if (callbackContext.canceled)
+            {
+                IsPlayerJumping = false;
+
+                if (IsPlayerSprinting == true)
+                {
+                    OnPlayerStateChanged.Invoke(PlayerState.SPRINTING);
+                }
+                else if (IsPlayerWalking == true)
+                {
+                    OnPlayerStateChanged.Invoke(PlayerState.MOVING);
+                }
+                else
+                {
+                    OnPlayerStateChanged.Invoke(PlayerState.IDLE);
+                }
+            }
         }
 
         private void AttachEvents ()
         {
             CurrentInputActions.Player.Sprint.performed += HandleSprint;
             CurrentInputActions.Player.Sprint.canceled += HandleSprint;
+            CurrentInputActions.Player.Move.performed += HandlePlayerStateOnMove;
+            CurrentInputActions.Player.Move.canceled += HandlePlayerStateOnMove;
+            CurrentInputActions.Player.Jump.performed += HandleStateOnJump;
+            CurrentInputActions.Player.Jump.canceled += HandleStateOnJump;
         }
 
         private void DetachEvents ()
         {
             CurrentInputActions.Player.Sprint.performed -= HandleSprint;
             CurrentInputActions.Player.Sprint.canceled -= HandleSprint;
+            CurrentInputActions.Player.Move.performed -= HandlePlayerStateOnMove;
+            CurrentInputActions.Player.Move.canceled -= HandlePlayerStateOnMove;
+            CurrentInputActions.Player.Jump.performed -= HandleStateOnJump;
+            CurrentInputActions.Player.Jump.canceled -= HandleStateOnJump;
         }
     }
 }

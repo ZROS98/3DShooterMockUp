@@ -5,8 +5,6 @@
         IDLE,
         MOVING,
         JUMPING,
-        SHOOTING,
-        SPRINTING,
-        POWER_UPPED
+        SPRINTING
     }
 }

@@ -23,7 +23,6 @@ namespace ShooterMockUp.Player
         {
             PowerUpDurationTimer = new WaitForSeconds(powerUpDuration);
             StartCoroutine(PowerUpProcess(powerUpType, powerUpPower));
-            CurrentPlayerUI.UpdatePlayerStateText(PlayerState.POWER_UPPED);
         }
 
         protected virtual void Awake ()
@@ -85,13 +84,11 @@ namespace ShooterMockUp.Player
         private void AttachEvents ()
         {
             CurrentPlayerMovement.OnPlayerStateChanged += CurrentPlayerUI.UpdatePlayerStateText;
-            CurrentPlayerShooting.OnPlayerStateChanged += CurrentPlayerUI.UpdatePlayerStateText;
         }
 
         private void DetachEvents ()
         {
             CurrentPlayerMovement.OnPlayerStateChanged -= CurrentPlayerUI.UpdatePlayerStateText;
-            CurrentPlayerShooting.OnPlayerStateChanged -= CurrentPlayerUI.UpdatePlayerStateText;
         }
     }
 }

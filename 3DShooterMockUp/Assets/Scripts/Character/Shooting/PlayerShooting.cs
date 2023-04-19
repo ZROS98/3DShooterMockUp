@@ -16,8 +16,6 @@ namespace ShooterMockUp.Player
 
         public ShooterMockUpInputActions CurrentInputActions { get; set; }
 
-        public event Action<PlayerState> OnPlayerStateChanged = delegate (PlayerState state) { };
-
         public void ActivateWeaponPowerUp (int powerUpPower)
         {
             HandleWeaponPowerUp(CurrentSlowWeapon, powerUpPower);
@@ -53,13 +51,11 @@ namespace ShooterMockUp.Player
         private void OnLeftMouseButtonActionUpdated (InputAction.CallbackContext context)
         {
             CurrentFastWeapon.Shoot();
-            OnPlayerStateChanged.Invoke(PlayerState.SHOOTING);
         }
 
         private void OnRightMouseButtonActionUpdated (InputAction.CallbackContext context)
         {
             CurrentSlowWeapon.Shoot();
-            OnPlayerStateChanged.Invoke(PlayerState.SHOOTING);
         }
 
         private void AttachEvents ()
