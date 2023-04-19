@@ -32,7 +32,7 @@ namespace ShooterMockUp.Enemy
             HealthPoints = CurrentEnemySetup.HealthPoints;
             CurrentRenderer.material.color = CurrentEnemySetup.HighHealthPointsLevelColor;
         }
-        
+
         private void UpdateColor ()
         {
             ColorLerpCoroutine = StartCoroutine(UpdateColorProcess());
@@ -42,16 +42,23 @@ namespace ShooterMockUp.Enemy
         {
             float elapsedTime = 0f;
 
-            while (elapsedTime < CurrentEnemySetup.ColorLerpDuration)
+            if (HealthPoints > 0)
             {
-                CurrentRenderer.material.color = Color.Lerp(CurrentRenderer.material.color, GetLerpedColor(), elapsedTime / CurrentEnemySetup.ColorLerpDuration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
+                while (elapsedTime < CurrentEnemySetup.ColorLerpDuration)
+                {
+                    CurrentRenderer.material.color = Color.Lerp(CurrentRenderer.material.color, GetLerpedColor(), elapsedTime / CurrentEnemySetup.ColorLerpDuration);
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
 
-            CurrentRenderer.material.color = GetLerpedColor();
-            CheckIfAlive();
-            StopCoroutine(ColorLerpCoroutine);
+                CurrentRenderer.material.color = GetLerpedColor();
+            }
+            else
+            {
+                CurrentRenderer.material.color = GetLerpedColor();
+                CheckIfAlive();
+                StopCoroutine(ColorLerpCoroutine);
+            }
         }
 
         private Color GetLerpedColor ()
